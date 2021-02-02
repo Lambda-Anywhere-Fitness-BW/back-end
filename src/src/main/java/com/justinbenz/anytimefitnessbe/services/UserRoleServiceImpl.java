@@ -1,14 +1,14 @@
 package com.justinbenz.anytimefitnessbe.services;
 
-import com.justinbenz.anytimefitnessbe.repositories.FitnessClassRepository;
+import com.justinbenz.anytimefitnessbe.repositories.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-@Service(value = "fitnessClassTypeService")
-public class FitnessClassTypeServiceImpl implements FitnessClassTypeService{
+@Service("userRoleService")
+public class UserRoleServiceImpl {
 
     @Autowired
-    private FitnessClassRepository fitnessClassRepository;
+    private UserRoleRepository userRoleRepository;
 }

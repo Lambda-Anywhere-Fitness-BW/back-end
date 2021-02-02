@@ -5,13 +5,13 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class PunchId implements Serializable {
+public class ClientFitnessClassId implements Serializable {
 
     private long client;
 
     private long fitnessclass;
 
-    public PunchId() {
+    public ClientFitnessClassId() {
     }
 
     public long getClient() {
@@ -34,8 +34,8 @@ public class PunchId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PunchId punchId = (PunchId) o;
-        return client == punchId.client && fitnessclass == punchId.fitnessclass;
+        ClientFitnessClassId clientFitnessClassId = (ClientFitnessClassId) o;
+        return client == clientFitnessClassId.client && fitnessclass == clientFitnessClassId.fitnessclass;
     }
 
     @Override

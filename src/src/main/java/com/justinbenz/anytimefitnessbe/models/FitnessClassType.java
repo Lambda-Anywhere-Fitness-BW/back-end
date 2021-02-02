@@ -14,7 +14,7 @@ public class FitnessClassType {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long fitnessclasstypeid;
 
-    @OneToMany(mappedBy = "fitnessClassType",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "fitnessClassType", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "fitnessClassType", allowSetters = true)
     private Set<FitnessClass> fitnessClasses = new HashSet<>();
 
@@ -23,6 +23,19 @@ public class FitnessClassType {
     private String name;
 
     public FitnessClassType() {
+    }
+
+    public FitnessClassType(Set<FitnessClass> fitnessClasses, String name) {
+        this.fitnessClasses = fitnessClasses;
+        this.name = name;
+    }
+
+    public long getFitnessclasstypeid() {
+        return fitnessclasstypeid;
+    }
+
+    public void setFitnessclasstypeid(long fitnessclasstypeid) {
+        this.fitnessclasstypeid = fitnessclasstypeid;
     }
 
     public Set<FitnessClass> getFitnessClasses() {

@@ -19,16 +19,11 @@ public class Client {
     orphanRemoval = true)
     @JsonIgnoreProperties(value = "client",
     allowSetters = true)
-    private Set<Punch> fitnessClasses = new HashSet<>();
+    private Set<ClientFitnessClass> fitnessClasses = new HashSet<>();
 
-    @Column
-    private String name;
-
-    @Column
-    private String aviurl;
-
-    @Column
-    private String bio;
+    @OneToOne
+    @JoinColumn(name = "userid")
+    private User user;
 
     @Column
     private int fitnesslevel;
@@ -36,17 +31,22 @@ public class Client {
     @Column
     private String location;
 
-
     public Client() {
     }
 
-    public Client(Set<Punch> fitnessClasses, String name, String aviurl, String bio, int fitnesslevel, String location) {
+    public Client(Set<ClientFitnessClass> fitnessClasses, User user, int fitnesslevel, String location) {
         this.fitnessClasses = fitnessClasses;
-        this.name = name;
-        this.aviurl = aviurl;
-        this.bio = bio;
+        this.user = user;
         this.fitnesslevel = fitnesslevel;
         this.location = location;
+    }
+
+    public Set<ClientFitnessClass> getFitnessClasses() {
+        return fitnessClasses;
+    }
+
+    public void setFitnessClasses(Set<ClientFitnessClass> fitnessClasses) {
+        this.fitnessClasses = fitnessClasses;
     }
 
     public long getClientid() {
@@ -57,36 +57,12 @@ public class Client {
         this.clientid = clientid;
     }
 
-    public Set<Punch> getFitnessClasses() {
-        return fitnessClasses;
+    public User getUser() {
+        return user;
     }
 
-    public void setFitnessClasses(Set<Punch> fitnessClasses) {
-        this.fitnessClasses = fitnessClasses;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAviurl() {
-        return aviurl;
-    }
-
-    public void setAviurl(String aviurl) {
-        this.aviurl = aviurl;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getFitnesslevel() {

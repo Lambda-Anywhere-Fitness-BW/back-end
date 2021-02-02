@@ -4,9 +4,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "punches")
-@IdClass(PunchId.class)
-public class Punch implements Serializable {
+@Table(name = "clientfitnessclass")
+@IdClass(ClientFitnessClassId.class)
+public class ClientFitnessClass implements Serializable {
 
     @Id
     @ManyToOne
@@ -24,10 +24,10 @@ public class Punch implements Serializable {
     @Column(nullable = false, unique = false)
     private int punches;
 
-    public Punch() {
+    public ClientFitnessClass() {
     }
 
-    public Punch(Client client, FitnessClass fitnessclass, int punches) {
+    public ClientFitnessClass(Client client, FitnessClass fitnessclass, int punches) {
         this.client = client;
         this.fitnessclass = fitnessclass;
         this.punches = punches;
@@ -65,7 +65,7 @@ public class Punch implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Punch that = (Punch) o;
+        ClientFitnessClass that = (ClientFitnessClass) o;
         return this.client.getClientid() == that.client.getClientid() && this.fitnessclass.getFitnessclassid() == that.fitnessclass.getFitnessclassid();
     }
 

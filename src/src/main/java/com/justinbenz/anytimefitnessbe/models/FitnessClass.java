@@ -14,7 +14,7 @@ public class FitnessClass {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long fitnessclassid;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = false)
     private String name;
 
     @ManyToOne
@@ -29,12 +29,12 @@ public class FitnessClass {
 
     @OneToMany(mappedBy = "fitnessclass",cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "fitnessclass", allowSetters = true)
-    private Set<Punch> clients = new HashSet<>();
+    private Set<ClientFitnessClass> clients = new HashSet<>();
 
     public FitnessClass() {
     }
 
-    public FitnessClass(String name, Instructor instructor, FitnessClassType fitnessClassType, Set<Punch> clients) {
+    public FitnessClass(String name, Instructor instructor, FitnessClassType fitnessClassType, Set<ClientFitnessClass> clients) {
         this.name = name;
         this.instructor = instructor;
         this.fitnessClassType = fitnessClassType;
@@ -73,11 +73,11 @@ public class FitnessClass {
         this.fitnessClassType = fitnessClassType;
     }
 
-    public Set<Punch> getClients() {
+    public Set<ClientFitnessClass> getClients() {
         return clients;
     }
 
-    public void setClients(Set<Punch> clients) {
+    public void setClients(Set<ClientFitnessClass> clients) {
         this.clients = clients;
     }
 }
