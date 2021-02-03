@@ -14,9 +14,9 @@ public class FitnessClassType {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long fitnessclasstypeid;
 
-    @OneToMany(mappedBy = "fitnessClassType", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties(value = "fitnessClassType", allowSetters = true)
-    private Set<FitnessClass> fitnessClasses = new HashSet<>();
+    @OneToMany(mappedBy = "fitnessclasstype", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "fitnessclasstypes", allowSetters = true)
+    private Set<FitnessClass> fitnessclasses = new HashSet<>();
 
 
     @Column(nullable = false, unique = true)
@@ -25,8 +25,8 @@ public class FitnessClassType {
     public FitnessClassType() {
     }
 
-    public FitnessClassType(Set<FitnessClass> fitnessClasses, String name) {
-        this.fitnessClasses = fitnessClasses;
+    public FitnessClassType(Set<FitnessClass> fitnessclasses, String name) {
+        this.fitnessclasses = fitnessclasses;
         this.name = name;
     }
 
@@ -38,12 +38,12 @@ public class FitnessClassType {
         this.fitnessclasstypeid = fitnessclasstypeid;
     }
 
-    public Set<FitnessClass> getFitnessClasses() {
-        return fitnessClasses;
+    public Set<FitnessClass> getFitnessclasses() {
+        return fitnessclasses;
     }
 
-    public void setFitnessClasses(Set<FitnessClass> fitnessClasses) {
-        this.fitnessClasses = fitnessClasses;
+    public void setFitnessclasses(Set<FitnessClass> fitnessClasses) {
+        this.fitnessclasses = fitnessClasses;
     }
 
     public String getName() {

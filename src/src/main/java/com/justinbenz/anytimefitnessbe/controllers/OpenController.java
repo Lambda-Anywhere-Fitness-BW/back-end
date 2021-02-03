@@ -99,7 +99,7 @@ public class OpenController
         } else {
             Client client = new Client();
             client.setUser(newuser);
-            client.setFitnesslevel(newminuser.getFitlvl());
+            client.setFitnesslevel(newminuser.getFitnesslevel());
             client.setLocation(newminuser.getLocation());
 
             clientService.save(client);

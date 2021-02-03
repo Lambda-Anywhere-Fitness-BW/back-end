@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class ClientFitnessClassId implements Serializable {
+public class ClientFitnessClassId extends Auditable implements Serializable {
 
     private long client;
 

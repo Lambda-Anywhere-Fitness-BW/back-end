@@ -1,5 +1,6 @@
 package com.justinbenz.anytimefitnessbe.services;
 
+import com.justinbenz.anytimefitnessbe.exceptions.ResourceNotFoundException;
 import com.justinbenz.anytimefitnessbe.models.User;
 import com.justinbenz.anytimefitnessbe.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,10 @@ public class SecurityUserServiceImpl implements UserDetailsService {
 
     @Transactional
     @Override
-    public UserDetails loadUserByUsername(String s) throws EntityNotFoundException {
+    public UserDetails loadUserByUsername(String s) throws ResourceNotFoundException {
         User user = userrepos.findByUsername(s.toLowerCase());
         if( user == null) {
-            throw new EntityNotFoundException("Invalid username or password.");
+            throw new ResourceNotFoundException("Invalid username or password.");
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthority());
     }

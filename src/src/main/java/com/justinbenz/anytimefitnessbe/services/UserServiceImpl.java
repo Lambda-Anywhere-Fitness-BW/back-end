@@ -1,6 +1,7 @@
 package com.justinbenz.anytimefitnessbe.services;
 
 
+import com.justinbenz.anytimefitnessbe.exceptions.ResourceNotFoundException;
 import com.justinbenz.anytimefitnessbe.models.Role;
 import com.justinbenz.anytimefitnessbe.models.User;
 import com.justinbenz.anytimefitnessbe.models.UserRoles;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Transactional
 @Service("userService")
@@ -30,7 +33,7 @@ public class UserServiceImpl implements UserService{
         if (user.getUserid() != 0)
         {
             userrepos.findById(user.getUserid())
-                    .orElseThrow(() -> new EntityNotFoundException("User id " + user.getUserid() + " not found!"));
+                    .orElseThrow(() -> new ResourceNotFoundException("User id " + user.getUserid() + " not found!"));
             newUser.setUserid(user.getUserid());
         }
 
@@ -39,6 +42,8 @@ public class UserServiceImpl implements UserService{
         newUser.setPasswordNoEncrypt(user.getPassword());
         newUser.setEmail(user.getEmail()
                 .toLowerCase());
+        newUser.setAviurl(user.getAviurl());
+        newUser.setBio(user.getBio());
 
         newUser.getRoles()
                 .clear();
@@ -54,4 +59,19 @@ public class UserServiceImpl implements UserService{
         return userrepos.save(newUser);
     }
 
+    public User findUserById(long id) throws
+            EntityNotFoundException
+    {
+        return userrepos.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Userid " + id + " not found!"));
+    }
+
+
+    @Override
+    public List<User> findAll() {
+        List<User> list = new ArrayList<>();
+
+        userrepos.findAll().iterator().forEachRemaining(list::add);
+        return list;
+    }
 }

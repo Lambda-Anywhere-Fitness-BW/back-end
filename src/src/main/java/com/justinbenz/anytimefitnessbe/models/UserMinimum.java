@@ -32,11 +32,11 @@ public class UserMinimum
 
     private int yearsexp;
 
-    private String creds;
+    private String credentials;
 
     private String specialty;
 
-    private int fitlvl;
+    private int fitnesslevel;
 
     private String location;
 
@@ -102,6 +102,14 @@ public class UserMinimum
         this.email = email;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getBio() {
         return bio;
     }
@@ -118,14 +126,6 @@ public class UserMinimum
         this.aviurl = aviurl;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getYearsexp() {
         return yearsexp;
     }
@@ -134,12 +134,12 @@ public class UserMinimum
         this.yearsexp = yearsexp;
     }
 
-    public String getCreds() {
-        return creds;
+    public String getCredentials() {
+        return credentials;
     }
 
-    public void setCreds(String creds) {
-        this.creds = creds;
+    public void setCredentials(String credentials) {
+        this.credentials = credentials;
     }
 
     public String getSpecialty() {
@@ -150,12 +150,12 @@ public class UserMinimum
         this.specialty = specialty;
     }
 
-    public int getFitlvl() {
-        return fitlvl;
+    public int getFitnesslevel() {
+        return fitnesslevel;
     }
 
-    public void setFitlvl(int fitlvl) {
-        this.fitlvl = fitlvl;
+    public void setFitnesslevel(int fitnesslevel) {
+        this.fitnesslevel = fitnesslevel;
     }
 
     public String getLocation() {

@@ -1,9 +1,6 @@
 package com.justinbenz.anytimefitnessbe.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.justinbenz.anytimefitnessbe.repositories.InstructorRepository;
-import com.justinbenz.anytimefitnessbe.repositories.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,14 +8,14 @@ import java.util.List;
 
 @Entity
 @Table(name = "instructors")
-public class Instructor {
+public class Instructor extends Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long instructorid;
 
     @OneToMany(mappedBy = "instructor")
-    @JsonIgnoreProperties(value = "instructor", allowSetters = true)
+    @JsonIgnoreProperties(value = {"instructor", "fitnessclasses", "clients"}, allowSetters = true)
     private List<FitnessClass> fitnessClasses = new ArrayList<>();
 
     @OneToOne
@@ -32,14 +29,26 @@ public class Instructor {
     @Column(nullable = false, unique = false)
     private String specialty;
 
+    @Column(nullable = false, unique = false)
+    private String credentials;
+
     public Instructor() {
     }
 
-    public Instructor(List<FitnessClass> fitnessClasses, User user, int yearsexp, String specialty) {
+    public Instructor(List<FitnessClass> fitnessClasses, User user, int yearsexp, String specialty, String credentials) {
         this.fitnessClasses = fitnessClasses;
         this.user = user;
         this.yearsexp = yearsexp;
         this.specialty = specialty;
+        this.credentials = credentials;
+    }
+
+    public void setInstructorid(long instructorid) {
+        this.instructorid = instructorid;
+    }
+
+    public long getInstructorid() {
+        return instructorid;
     }
 
     public List<FitnessClass> getFitnessClasses() {
@@ -48,15 +57,6 @@ public class Instructor {
 
     public void setFitnessClasses(List<FitnessClass> fitnessClasses) {
         this.fitnessClasses = fitnessClasses;
-    }
-
-
-    public long getInstructorid() {
-        return instructorid;
-    }
-
-    public void setInstructorid(long instructorid) {
-        this.instructorid = instructorid;
     }
 
     public User getUser() {
@@ -81,5 +81,13 @@ public class Instructor {
 
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
+    }
+
+    public String getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(String credentials) {
+        this.credentials = credentials;
     }
 }

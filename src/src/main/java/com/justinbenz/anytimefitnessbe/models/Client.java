@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "clients")
-public class Client {
+public class Client extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,10 +19,11 @@ public class Client {
     orphanRemoval = true)
     @JsonIgnoreProperties(value = "client",
     allowSetters = true)
-    private Set<ClientFitnessClass> fitnessClasses = new HashSet<>();
+    private Set<ClientFitnessClass> clientfitnessclasses = new HashSet<>();
 
     @OneToOne
     @JoinColumn(name = "userid")
+    @JsonIgnoreProperties(value = "client", allowSetters = true)
     private User user;
 
     @Column
@@ -34,19 +35,19 @@ public class Client {
     public Client() {
     }
 
-    public Client(Set<ClientFitnessClass> fitnessClasses, User user, int fitnesslevel, String location) {
-        this.fitnessClasses = fitnessClasses;
+    public Client(Set<ClientFitnessClass> clientfitnessclasses, User user, int fitnesslevel, String location) {
+        this.clientfitnessclasses = clientfitnessclasses;
         this.user = user;
         this.fitnesslevel = fitnesslevel;
         this.location = location;
     }
 
-    public Set<ClientFitnessClass> getFitnessClasses() {
-        return fitnessClasses;
+    public Set<ClientFitnessClass> getClientfitnessclasses() {
+        return clientfitnessclasses;
     }
 
-    public void setFitnessClasses(Set<ClientFitnessClass> fitnessClasses) {
-        this.fitnessClasses = fitnessClasses;
+    public void setClientfitnessclasses(Set<ClientFitnessClass> fitnessClasses) {
+        this.clientfitnessclasses = fitnessClasses;
     }
 
     public long getClientid() {

@@ -13,16 +13,18 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userid;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "users", allowSetters = true)
     private Client client;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "users", allowSetters = true)
     private Instructor instructor;
 
     @Column(nullable = false, unique = false)
@@ -37,6 +39,12 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(nullable = false, unique = false)
+    private String bio;
+
+    @Column(nullable = false, unique = false)
+    private String aviurl;
+
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
@@ -47,15 +55,32 @@ public class User {
     public User() {
     }
 
-    public User(long userid, Client client, Instructor instructor, String name, String email, String password, String username, Set<UserRoles> userroles) {
-        this.userid = userid;
+    public User(Client client, Instructor instructor, String name, String email, String password, String username, String bio, String aviurl, Set<UserRoles> roles) {
         this.client = client;
         this.instructor = instructor;
         this.name = name;
         this.email = email;
         this.password = password;
         this.username = username;
-        this.roles = userroles;
+        this.bio = bio;
+        this.aviurl = aviurl;
+        this.roles = roles;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getAviurl() {
+        return aviurl;
+    }
+
+    public void setAviurl(String aviurl) {
+        this.aviurl = aviurl;
     }
 
     public long getUserid() {

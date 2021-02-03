@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "fitnessclasses")
-public class FitnessClass {
+public class FitnessClass extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,6 +17,18 @@ public class FitnessClass {
     @Column(nullable = false, unique = false)
     private String name;
 
+    @Column(nullable = false, unique = false)
+    private String starttime;
+
+    @Column(nullable = false, unique = false)
+    private String duration;
+
+    @Column(nullable = false, unique = false)
+    private int intensitylevel;
+
+    @Column(nullable = false, unique = false)
+    private String location;
+
     @ManyToOne
     @JoinColumn(name = "instructorid", nullable = false)
     @JsonIgnoreProperties(value = "fitnessclasses", allowSetters = true)
@@ -24,20 +36,25 @@ public class FitnessClass {
 
     @ManyToOne
     @JoinColumn(name = "fitnessclasstypeid", nullable = false)
-    @JsonIgnoreProperties(value = "fitnessclasses", allowSetters = true)
-    private FitnessClassType fitnessClassType;
+    @JsonIgnoreProperties(value={"fitnessclasses"}, allowSetters = true)
+    private FitnessClassType fitnessclasstype;
 
     @OneToMany(mappedBy = "fitnessclass",cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties(value = "fitnessclass", allowSetters = true)
+    @JsonIgnoreProperties(value = "fitnessclasses", allowSetters = true)
     private Set<ClientFitnessClass> clients = new HashSet<>();
+
 
     public FitnessClass() {
     }
 
-    public FitnessClass(String name, Instructor instructor, FitnessClassType fitnessClassType, Set<ClientFitnessClass> clients) {
+    public FitnessClass(String name, String starttime, String duration, int intensitylevel, String location, Instructor instructor, FitnessClassType fitnessclasstype, Set<ClientFitnessClass> clients) {
         this.name = name;
+        this.starttime = starttime;
+        this.duration = duration;
+        this.intensitylevel = intensitylevel;
+        this.location = location;
         this.instructor = instructor;
-        this.fitnessClassType = fitnessClassType;
+        this.fitnessclasstype = fitnessclasstype;
         this.clients = clients;
     }
 
@@ -57,6 +74,38 @@ public class FitnessClass {
         this.name = name;
     }
 
+    public String getStarttime() {
+        return starttime;
+    }
+
+    public void setStarttime(String starttime) {
+        this.starttime = starttime;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public int getIntensitylevel() {
+        return intensitylevel;
+    }
+
+    public void setIntensitylevel(int intensitylevel) {
+        this.intensitylevel = intensitylevel;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public Instructor getInstructor() {
         return instructor;
     }
@@ -65,12 +114,12 @@ public class FitnessClass {
         this.instructor = instructor;
     }
 
-    public FitnessClassType getFitnessClassType() {
-        return fitnessClassType;
+    public FitnessClassType getFitnessclasstype() {
+        return fitnessclasstype;
     }
 
-    public void setFitnessClassType(FitnessClassType fitnessClassType) {
-        this.fitnessClassType = fitnessClassType;
+    public void setFitnessclasstype(FitnessClassType fitnessClassType) {
+        this.fitnessclasstype = fitnessClassType;
     }
 
     public Set<ClientFitnessClass> getClients() {

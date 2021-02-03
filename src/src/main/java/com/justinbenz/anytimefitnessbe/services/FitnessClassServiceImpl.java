@@ -10,6 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("fitnessClassService")
 public class FitnessClassServiceImpl implements FitnessClassService {
 
-//    @Autowired
-//    private FitnessClassRepository fitclassrepos;
+    @Autowired
+    private FitnessClassRepository fitclassrepos;
 }

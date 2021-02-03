@@ -1,20 +1,24 @@
 package com.justinbenz.anytimefitnessbe.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "clientfitnessclass")
+@Table(name = "clientfitnessclasses")
 @IdClass(ClientFitnessClassId.class)
-public class ClientFitnessClass implements Serializable {
+public class ClientFitnessClass extends Auditable implements Serializable {
 
     @Id
     @ManyToOne
+    @JsonIgnoreProperties(value = {"clients", "clientfitnessclasses"}, allowSetters = true)
     @JoinColumn(name = "clientid")
     private Client client;
 
     @Id
     @ManyToOne
+    @JsonIgnoreProperties(value = {"clients", "clientfitnessclasses"},allowSetters = true)
     @JoinColumn(name = "fitnessclassid")
     private FitnessClass fitnessclass;
 
