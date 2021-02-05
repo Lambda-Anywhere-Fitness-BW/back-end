@@ -8,6 +8,6 @@ public class ResourceNotFoundException
 {
     public ResourceNotFoundException(String message)
     {
-        super("Error from Anywhere-Fitness " + message);
+        super("Error from Anywhere-Fitness:" + message);
     }
 }

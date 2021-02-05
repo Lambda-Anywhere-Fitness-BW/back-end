@@ -8,6 +8,8 @@ public interface ClientService {
 
     Client save(Client client);
 
+    Client update(Client client, long id);
+
     List<Client> findAll();
 
     Client findClientById(long clientid);

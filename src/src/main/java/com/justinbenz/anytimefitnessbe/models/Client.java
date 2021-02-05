@@ -42,20 +42,20 @@ public class Client extends Auditable {
         this.location = location;
     }
 
-    public Set<ClientFitnessClass> getClientfitnessclasses() {
-        return clientfitnessclasses;
-    }
-
-    public void setClientfitnessclasses(Set<ClientFitnessClass> fitnessClasses) {
-        this.clientfitnessclasses = fitnessClasses;
+    public void setClientid(long clientid) {
+        this.clientid = clientid;
     }
 
     public long getClientid() {
         return clientid;
     }
 
-    public void setClientid(long clientid) {
-        this.clientid = clientid;
+    public Set<ClientFitnessClass> getClientfitnessclasses() {
+        return clientfitnessclasses;
+    }
+
+    public void setClientfitnessclasses(Set<ClientFitnessClass> clientfitnessclasses) {
+        this.clientfitnessclasses = clientfitnessclasses;
     }
 
     public User getUser() {

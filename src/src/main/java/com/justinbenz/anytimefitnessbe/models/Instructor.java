@@ -23,6 +23,9 @@ public class Instructor extends Auditable{
     @JsonIgnoreProperties(value = "instructor", allowSetters = true)
     private User user;
 
+    @Transient
+    boolean hasvalueforyearsexp = false;
+
     @Column(nullable = false, unique = false)
     private int yearsexp;
 
@@ -73,6 +76,7 @@ public class Instructor extends Auditable{
 
     public void setYearsexp(int yearsexp) {
         this.yearsexp = yearsexp;
+        hasvalueforyearsexp = true;
     }
 
     public String getSpecialty() {

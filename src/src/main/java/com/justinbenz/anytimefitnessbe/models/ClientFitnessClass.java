@@ -31,10 +31,9 @@ public class ClientFitnessClass extends Auditable implements Serializable {
     public ClientFitnessClass() {
     }
 
-    public ClientFitnessClass(Client client, FitnessClass fitnessclass, int punches) {
+    public ClientFitnessClass(Client client, FitnessClass fitnessclass) {
         this.client = client;
         this.fitnessclass = fitnessclass;
-        this.punches = punches;
     }
 
     public Client getClient() {
@@ -62,7 +61,7 @@ public class ClientFitnessClass extends Auditable implements Serializable {
     }
 
     public void setPunches(int punches) {
-        this.punches = punches;
+        this.punches = 0;
     }
 
     @Override

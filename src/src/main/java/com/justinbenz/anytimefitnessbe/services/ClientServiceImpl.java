@@ -1,9 +1,8 @@
 package com.justinbenz.anytimefitnessbe.services;
 
 import com.justinbenz.anytimefitnessbe.exceptions.ResourceNotFoundException;
-import com.justinbenz.anytimefitnessbe.models.Client;
-import com.justinbenz.anytimefitnessbe.models.User;
-import com.justinbenz.anytimefitnessbe.repositories.ClientRepository;
+import com.justinbenz.anytimefitnessbe.models.*;
+import com.justinbenz.anytimefitnessbe.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +18,18 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private ClientRepository clientrepos;
 
+    @Autowired
+    private UserRepository userrepos;
+
+    @Autowired
+    private ClientFitnessClassRepository cfcrepos;
+
+    @Autowired
+    private FitnessClassRepository fcrepos;
+
+    @Autowired
+    private FitnessClassTypeRepository cfctyperepos;
+
     @Transactional
     @Override
     public Client save(Client client) {
@@ -26,14 +37,50 @@ public class ClientServiceImpl implements ClientService {
 
         if (client.getClientid() != 0) {
             clientrepos.findById(client.getClientid())
-                    .orElseThrow(() -> new ResourceNotFoundException("User id " + client.getClientid() + " not found!"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Client with id " + client.getClientid() + " not found!"));
             newClient.setClientid(client.getClientid());
         }
 
         newClient.setFitnesslevel(client.getFitnesslevel());
         newClient.setLocation(client.getLocation());
 
-        return clientrepos.save(client);
+        User user = userrepos.findById(client.getUser().getUserid()).orElseThrow(() -> new ResourceNotFoundException("User with id" + client.getUser().getUserid() + " not found!"));
+        newClient.setUser(user);
+
+        if(client.getClientfitnessclasses().size() > 0) {
+            for (ClientFitnessClass cfc : client.getClientfitnessclasses()) {
+                FitnessClass fitnessClass = fcrepos.findById(cfc.getFitnessclass().getFitnessclassid()).orElseThrow(() -> new ResourceNotFoundException("fitness class with id: " + cfc.getFitnessclass().getFitnessclassid() + "was not found"));
+                newClient.getClientfitnessclasses().add(new ClientFitnessClass (newClient, fitnessClass));
+                System.out.println(newClient);
+            }
+        }
+        return clientrepos.save(newClient);
+    }
+
+    @Override
+    public Client update(Client client, long id) {
+        Client currentClient = findClientById(id);
+
+        if(client.getFitnesslevel() != 0){
+            currentClient.setFitnesslevel(client.getFitnesslevel());
+        }
+
+        if(client.getLocation() != null){
+            currentClient.setLocation(client.getLocation());
+        }
+
+        if(client.getUser() != null){
+            User user = userrepos.findById(client.getUser().getUserid()).orElseThrow(() -> new ResourceNotFoundException("User with id: " + client.getUser().getUserid() + " was not found!"));
+            currentClient.setUser(user);
+        }
+
+        if(client.getClientfitnessclasses().size() > 0) {
+            for (ClientFitnessClass cfc : client.getClientfitnessclasses()) {
+                FitnessClass fitnessClass = fcrepos.findById(cfc.getFitnessclass().getFitnessclassid()).orElseThrow(() -> new ResourceNotFoundException("fitness class with id: " + cfc.getFitnessclass().getFitnessclassid() + "was not found"));
+                currentClient.getClientfitnessclasses().add(new ClientFitnessClass (currentClient, fitnessClass));
+            }
+        }
+        return clientrepos.save(currentClient);
     }
 
     @Override

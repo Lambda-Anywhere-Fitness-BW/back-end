@@ -24,16 +24,18 @@ INSERT INTO ROLES(ROLEID, NAME, CREATEDBY, CREATEDDATE, LASTMODIFIEDBY, LASTMODI
            (2, 'INSTRUCTOR', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP );
 
 INSERT INTO USERS(USERID, NAME, USERNAME, EMAIL, PASSWORD, BIO, AVIURL, CREATEDBY, CREATEDDATE, LASTMODIFIEDBY, LASTMODIFIEDDATE)
-    VALUES (1,'Justin Benz', 'jusbenz', 'justin@host.local', 'pufflah', 'Coffee enthusiast. Professional web advocate. Explorer. Certified troublemaker. Travel practitioner. Student. Creator.', 'https://cdn.discordapp.com/attachments/194052884336345089/806302497274069042/gucciturtle.jpg', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
-           (2,'Ruben Ramirez', 'rubenar', 'ruben@host.local', 'arbysreuben', 'Amateur pop cultureaholic. Certified creator. Travel trailblazer. Professional beer fanatic. Thinker. Coffee evangelist.', 'https://cdn.discordapp.com/attachments/194052884336345089/806304255170052176/cate.jpg', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
-           (3,'Andrew Sohrabi', 'asohrabi', 'andrew@host.local', 'owaowa', 'Web expert. Amateur reader. Entrepreneur. Freelance coffee ninja. Beer maven. Proud analyst. Bacon junkie. Problem solver. Organizer.', 'https://cdn.discordapp.com/attachments/194052884336345089/806306531888070706/steviecat.jpg', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
-           (4,'Emma Cooper', 'ecoupez', 'emma@host.local', 'emC124', 'Travel lover. Bacon guru. Music scholar. Unapologetic alcohol enthusiast. Twitter buff. Social media junkie. Thinker. Student.', 'https://cdn.discordapp.com/attachments/194052884336345089/806310316086525993/okdog.png','SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
+    VALUES (1,'Justin Benz', 'jusbenz', 'justin@host.local', '$2y$12$x2dLGInRrJV1s5lXutP1Gu4YqI0Kw1675htPUf.78exw79LtyB5Bm', 'Coffee enthusiast. Professional web advocate. Explorer. Certified troublemaker. Travel practitioner. Student. Creator.', 'https://cdn.discordapp.com/attachments/194052884336345089/806302497274069042/gucciturtle.jpg', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (2,'Ruben Ramirez', 'rubenar', 'ruben@host.local', '$2y$12$xQ45OZBXOpv0yeuaP06mA.oze3.krSHBNV.0a3Lt3cja6XWqpjbkS', 'Amateur pop cultureaholic. Certified creator. Travel trailblazer. Professional beer fanatic. Thinker. Coffee evangelist.', 'https://cdn.discordapp.com/attachments/194052884336345089/806304255170052176/cate.jpg', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (3,'Andrew Sohrabi', 'asohrabi', 'andrew@host.local', '$2y$12$uEGryxrAlzz4R/7nuZhT0uDU15ajIyTNWDvcBvFeRelYTltWUOwOO', 'Web expert. Amateur reader. Entrepreneur. Freelance coffee ninja. Beer maven. Proud analyst. Bacon junkie. Problem solver. Organizer.', 'https://cdn.discordapp.com/attachments/194052884336345089/806306531888070706/steviecat.jpg', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (4,'Emma Cooper', 'ecoupez', 'emma@host.local', '$2y$12$Qs1FL.BtdKSuB1HSKn17tOgEn8J2y.a.W7WJ1hoeH2qOdmpyoXoUq', 'Travel lover. Bacon guru. Music scholar. Unapologetic alcohol enthusiast. Twitter buff. Social media junkie. Thinker. Student.', 'https://cdn.discordapp.com/attachments/194052884336345089/806310316086525993/okdog.png','SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (5,'Jamie Cassidy', 'jcassidy', 'jamie@host.local', '$2y$12$5AjoCXBaRcMMVE/QGdraV.cLN5KPDO0c/wUGzBsFBoSNfdu4I3Kfm', 'Alcohol buff. Music advocate. Award-winning beer fanatic. Problem solver. Incurable internet fan. Food ninja. Explorer.', 'https://cdn.discordapp.com/attachments/194052884336345089/806675904889225216/cudi-blur.jpg', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
 
 INSERT INTO USERROLES(USERID, ROLEID, CREATEDBY, CREATEDDATE, LASTMODIFIEDBY, LASTMODIFIEDDATE)
     VALUES (1, 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
            (2, 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
            (3, 2, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
-           (4, 2, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
+           (4, 2, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (5, 2, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
 
 INSERT INTO CLIENTS(CLIENTID, USERID, FITNESSLEVEL, LOCATION, CREATEDBY, CREATEDDATE, LASTMODIFIEDBY, LASTMODIFIEDDATE)
     VALUES (1, 1, 3, 'Guayaba, Dominican Republic', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
@@ -60,8 +62,6 @@ INSERT INTO CLIENTFITNESSCLASSES(CLIENTID, FITNESSCLASSID, MAXPUNCHES, PUNCHES, 
            (2, 2, 10, 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
            (1, 3, 5, 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
            (2, 4, 15, 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
-
-
 
 
 alter sequence hibernate_sequence restart with 15;

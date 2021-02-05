@@ -54,11 +54,16 @@ public class ResourceServerConfig
                         "/h2-console/**",
                         "/v2/api-docs",
                         "/webjars/**",
-                        "/register",
+                        "/register/**",
+                        "/oauth/token",
                         "/login")
                 .permitAll()
                 .antMatchers("/oauth/revoke-token",
-                        "/logout")
+                        "/logout",
+                        "/users/**",
+                        "/roles/**",
+                        "/classes/**",
+                        "/classtypes/**")
                 .authenticated()
                 .antMatchers("/clients/**")
                 .hasAnyRole("CLIENT")

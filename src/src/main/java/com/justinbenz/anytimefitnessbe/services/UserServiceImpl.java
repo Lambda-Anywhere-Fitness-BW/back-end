@@ -9,8 +9,6 @@ import com.justinbenz.anytimefitnessbe.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +24,49 @@ public class UserServiceImpl implements UserService{
 
     @Transactional
     @Override
+    public User update(
+            User user,
+            long id)
+    {
+        User currentUser = findUserById(id);
+
+        if (user.getUsername() != null)
+        {
+            currentUser.setUsername(user.getUsername()
+                    .toLowerCase());
+        }
+
+        if (user.getPassword() != null)
+        {
+            currentUser.setPasswordNoEncrypt(user.getPassword());
+        }
+
+        if (user.getEmail() != null)
+        {
+            currentUser.setEmail(user.getEmail()
+                    .toLowerCase());
+        }
+
+        if (user.getRoles()
+                .size() > 0)
+        {
+            currentUser.getRoles()
+                    .clear();
+            for (UserRoles ur : user.getRoles())
+            {
+                Role addRole = roleService.findRoleById(ur.getRole()
+                        .getRoleid());
+
+                currentUser.getRoles()
+                        .add(new UserRoles(currentUser, addRole));
+            }
+        }
+
+        return userrepos.save(currentUser);
+    }
+
+    @Transactional
+    @Override
     public User save(User user)
     {
         User newUser = new User();
@@ -37,6 +78,7 @@ public class UserServiceImpl implements UserService{
             newUser.setUserid(user.getUserid());
         }
 
+        newUser.setName(user.getName());
         newUser.setUsername(user.getUsername()
                 .toLowerCase());
         newUser.setPasswordNoEncrypt(user.getPassword());
@@ -49,8 +91,10 @@ public class UserServiceImpl implements UserService{
                 .clear();
         for (UserRoles ur : user.getRoles())
         {
+            System.out.println(newUser.getUserid());
             Role addRole = roleService.findRoleById(ur.getRole()
                     .getRoleid());
+            System.out.println(addRole);
             newUser.getRoles()
                     .add(new UserRoles(newUser,
                             addRole));
@@ -59,13 +103,32 @@ public class UserServiceImpl implements UserService{
         return userrepos.save(newUser);
     }
 
+    @Transactional
+    @Override
+    public void delete(long id)
+    {
+        userrepos.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id:" + id + " not found!"));
+        userrepos.deleteById(id);
+    }
+
     public User findUserById(long id) throws
-            EntityNotFoundException
+            ResourceNotFoundException
     {
         return userrepos.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Userid " + id + " not found!"));
     }
 
+    @Override
+    public User findByName(String name)
+    {
+        User uu = userrepos.findByUsername(name.toLowerCase());
+        if (uu == null)
+        {
+            throw new ResourceNotFoundException("User name " + name + " not found!");
+        }
+        return uu;
+    }
 
     @Override
     public List<User> findAll() {

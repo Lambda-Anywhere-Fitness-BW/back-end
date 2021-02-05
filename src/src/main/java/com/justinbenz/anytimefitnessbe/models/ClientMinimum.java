@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
  * A model used to create a new user. The minimum information needed to create a user.
  * Note the role will default to USER.
  */
-public class UserMinimum
+public class ClientMinimum
 {
     /**
      * The username (String)
@@ -29,12 +29,6 @@ public class UserMinimum
     private String bio;
 
     private String aviurl;
-
-    private int yearsexp;
-
-    private String credentials;
-
-    private String specialty;
 
     private int fitnesslevel;
 
@@ -106,6 +100,14 @@ public class UserMinimum
         return name;
     }
 
+    public int getFitnesslevel() {
+        return fitnesslevel;
+    }
+
+    public void setFitnesslevel(int fitnesslevel) {
+        this.fitnesslevel = fitnesslevel;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -126,38 +128,6 @@ public class UserMinimum
         this.aviurl = aviurl;
     }
 
-    public int getYearsexp() {
-        return yearsexp;
-    }
-
-    public void setYearsexp(int yearsexp) {
-        this.yearsexp = yearsexp;
-    }
-
-    public String getCredentials() {
-        return credentials;
-    }
-
-    public void setCredentials(String credentials) {
-        this.credentials = credentials;
-    }
-
-    public String getSpecialty() {
-        return specialty;
-    }
-
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
-    }
-
-    public int getFitnesslevel() {
-        return fitnesslevel;
-    }
-
-    public void setFitnesslevel(int fitnesslevel) {
-        this.fitnesslevel = fitnesslevel;
-    }
-
     public String getLocation() {
         return location;
     }
@@ -165,4 +135,5 @@ public class UserMinimum
     public void setLocation(String location) {
         this.location = location;
     }
+
 }

@@ -1,6 +1,5 @@
 package com.justinbenz.anytimefitnessbe.controllers;
 
-
 import com.justinbenz.anytimefitnessbe.models.*;
 import com.justinbenz.anytimefitnessbe.services.ClientService;
 import com.justinbenz.anytimefitnessbe.services.InstructorService;
@@ -15,7 +14,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -53,6 +51,7 @@ public class OpenController
 
     @Autowired
     private TokenStore tokenStore;
+
     /**
      * This endpoint always anyone to create an account with the default role of USER. That role is hardcoded in this method.
      *
@@ -61,15 +60,14 @@ public class OpenController
      * @return The token access and other relevent data to token access. Status of CREATED. The location header to look up the new user.
      * @throws URISyntaxException we create some URIs during this method. If anything goes wrong with that creation, an exception is thrown.
      */
-    @PostMapping(value = "/register/{rolename}",
+    @PostMapping(value = "/register/client",
             consumes = {"application/json"},
             produces = {"application/json"})
     public ResponseEntity<?> addSelf(
             HttpServletRequest httpServletRequest,
             @Valid
             @RequestBody
-                    UserMinimum newminuser,
-            @PathVariable String rolename)
+                    ClientMinimum newminuser)
             throws
             URISyntaxException
     {
@@ -80,30 +78,110 @@ public class OpenController
         newuser.setPassword(newminuser.getPassword());
         newuser.setEmail(newminuser.getEmail());
         newuser.setName(newminuser.getName());
+        newuser.setBio(newminuser.getBio());
+        newuser.setAviurl(newminuser.getAviurl());
 
         // add the default role of user
         Set<UserRoles> newRoles = new HashSet<>();
-        newRoles.add(new UserRoles(newuser,
-                roleService.findByName(rolename)));
+        System.out.println(newuser.getUserid());
+        System.out.println("-----");
+        System.out.println(roleService.findByName("CLIENT").getRoleid());
+        UserRoles newUserRole = new UserRoles(newuser,
+                roleService.findByName("CLIENT"));
+        System.out.println(newUserRole.getUser().getUserid());
+        newRoles.add(newUserRole);
         newuser.setRoles(newRoles);
-
+        System.out.println(newuser);
         newuser = userService.save(newuser);
 
-        if(rolename == "INSTRUCTOR") {
-            Instructor instructor = new Instructor();
-            instructor.setUser(newuser);
-            instructor.setYearsexp(newminuser.getYearsexp());
-            instructor.setSpecialty(newminuser.getSpecialty());
-
-            instructorService.save(instructor);
-        } else {
             Client client = new Client();
             client.setUser(newuser);
             client.setFitnesslevel(newminuser.getFitnesslevel());
             client.setLocation(newminuser.getLocation());
 
             clientService.save(client);
-        }
+
+        // set the location header for the newly created resource
+        // The location comes from a different controller!
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI newUserURI = ServletUriComponentsBuilder.fromUriString(httpServletRequest.getServerName() + ":" + httpServletRequest.getLocalPort() + "/users/user/{userId}")
+                .buildAndExpand(newuser.getUserid())
+                .toUri();
+        responseHeaders.setLocation(newUserURI);
+
+        // return the access token
+        // To get the access token, surf to the endpoint /login just as if a client had done this.
+        RestTemplate restTemplate = new RestTemplate();
+        String requestURI = "http://localhost" + ":" + httpServletRequest.getLocalPort() + "/login";
+
+        List<MediaType> acceptableMediaTypes = new ArrayList<>();
+        acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setAccept(acceptableMediaTypes);
+        headers.setBasicAuth(System.getenv("OAUTHCLIENTID"),
+                System.getenv("OAUTHCLIENTSECRET"));
+
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("grant_type",
+                "password");
+        map.add("scope",
+                "read write trust");
+        map.add("username",
+                newminuser.getUsername());
+        map.add("password",
+                newminuser.getPassword());
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map,
+                headers);
+
+        String theToken = restTemplate.postForObject(requestURI,
+                request,
+                String.class);
+
+        return new ResponseEntity<>(theToken,
+                responseHeaders,
+                HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/register/instructor",
+            consumes = {"application/json"},
+            produces = {"application/json"})
+    public ResponseEntity<?> addSelf(
+            HttpServletRequest httpServletRequest,
+            @Valid
+            @RequestBody
+                    InstructorMinimum newminuser)
+            throws
+            URISyntaxException
+    {
+        // Create the user
+        User newuser = new User();
+
+        newuser.setUsername(newminuser.getUsername());
+        newuser.setPassword(newminuser.getPassword());
+        newuser.setEmail(newminuser.getEmail());
+        newuser.setName(newminuser.getName());
+        newuser.setBio(newminuser.getBio());
+        newuser.setAviurl(newminuser.getAviurl());
+
+        // add the default role of user
+        Set<UserRoles> newRoles = new HashSet<>();
+        newRoles.add(new UserRoles(newuser,
+                roleService.findByName("INSTRUCTOR")));
+        newuser.setRoles(newRoles);
+
+        newuser = userService.save(newuser);
+
+        Instructor instructor = new Instructor();
+        instructor.setUser(newuser);
+        instructor.setYearsexp(newminuser.getYearsexp());
+        instructor.setSpecialty(newminuser.getSpecialty());
+        instructor.setCredentials(newminuser.getCredentials());
+
+        instructorService.save(instructor);
+
         // set the location header for the newly created resource
         // The location comes from a different controller!
         HttpHeaders responseHeaders = new HttpHeaders();

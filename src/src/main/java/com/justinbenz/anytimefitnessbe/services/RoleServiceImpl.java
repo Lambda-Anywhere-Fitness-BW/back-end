@@ -1,5 +1,6 @@
 package com.justinbenz.anytimefitnessbe.services;
 
+import com.justinbenz.anytimefitnessbe.exceptions.ResourceNotFoundException;
 import com.justinbenz.anytimefitnessbe.models.Role;
 import com.justinbenz.anytimefitnessbe.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,17 @@ public class RoleServiceImpl implements RoleService{
 
     @Override
     public Role findByName(String name) {
-        return null;
+        Role role =  rolerepos.findRoleByNameIgnoringCase(name);
+        if(role != null){
+            return role;
+        } else {
+             throw new ResourceNotFoundException("Role with name " + name + " was not found");
+        }
     }
 
     @Override
     public Role findRoleById(long roleid) {
-        return null;
+        return rolerepos.findById(roleid)
+                .orElseThrow(() -> new ResourceNotFoundException("Role with id " + roleid + " was not found!"));
     }
 }

@@ -2,15 +2,18 @@ package com.justinbenz.anytimefitnessbe.controllers;
 
 
 import com.justinbenz.anytimefitnessbe.models.Client;
+import com.justinbenz.anytimefitnessbe.models.Instructor;
+import com.justinbenz.anytimefitnessbe.models.User;
+import com.justinbenz.anytimefitnessbe.repositories.UserRepository;
 import com.justinbenz.anytimefitnessbe.services.ClientService;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,6 +22,9 @@ public class ClientController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private UserRepository userrepos;
 
     @GetMapping(value = "/clients", produces = "application/json")
     public ResponseEntity<?> getAllClients(){
@@ -32,4 +38,17 @@ public class ClientController {
         return new ResponseEntity<>(c, HttpStatus.OK);
     }
 
+    @PostMapping(value = "/clients/new", produces = "application/json",  consumes = "application/json")
+    public ResponseEntity<?> addNewClient(@RequestBody @Valid Client client){
+        client = clientService.save(client);
+        return new ResponseEntity<>(client, HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/clients/classes", produces = "application/json")
+    public ResponseEntity<?> getClientClasses(){
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userrepos.findByUsername(currentUsername);
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 }
