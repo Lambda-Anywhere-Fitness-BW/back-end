@@ -30,6 +30,8 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private FitnessClassTypeRepository cfctyperepos;
 
+    @Autowired ClientService clientService;
+
     @Transactional
     @Override
     public Client save(Client client) {
@@ -54,7 +56,8 @@ public class ClientServiceImpl implements ClientService {
                 System.out.println(newClient);
             }
         }
-        return clientrepos.save(newClient);
+        client = clientService.save(client);
+        return client;
     }
 
     @Override
@@ -94,5 +97,19 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client findClientById(long clientid) {
         return clientrepos.findById(clientid).orElseThrow(() -> new EntityNotFoundException("Client with id" + clientid + "Not found!"));
+    }
+
+    @Override
+    public Client clientJoinClass(long fcid, ClientFitnessClassPunches clientFitnessClassPunches, User user) {
+        Client client = clientrepos.findByUser_Userid(user.getUserid());
+        if (client == null) {
+            throw new ResourceNotFoundException("Client class with id: " + user.getUserid() + " was not found!");
+        }
+        FitnessClass fitnessClass = fcrepos.findById(fcid).orElseThrow(() -> new ResourceNotFoundException("fitness class with id: " + fcid + " was not found!"));
+        System.out.println(fitnessClass);
+        System.out.println(client);
+        ClientFitnessClass newCfc = new ClientFitnessClass(client, fitnessClass, clientFitnessClassPunches.getPunches());
+        client.getClientfitnessclasses().add(newCfc);
+        return clientrepos.save(client);
     }
 }

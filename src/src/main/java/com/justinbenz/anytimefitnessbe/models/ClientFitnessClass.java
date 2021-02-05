@@ -22,13 +22,19 @@ public class ClientFitnessClass extends Auditable implements Serializable {
     @JoinColumn(name = "fitnessclassid")
     private FitnessClass fitnessclass;
 
-    @Column(nullable = false, unique = false)
-    private final int maxpunches = 10;
+    private int maxpunches = 10;
 
     @Column(nullable = false, unique = false)
     private int punches;
 
     public ClientFitnessClass() {
+    }
+
+    public ClientFitnessClass(Client client, FitnessClass fitnessclass, int punches) {
+        this.client = client;
+        this.fitnessclass = fitnessclass;
+        this.maxpunches = 10;
+        this.punches = punches;
     }
 
     public ClientFitnessClass(Client client, FitnessClass fitnessclass) {
@@ -38,6 +44,10 @@ public class ClientFitnessClass extends Auditable implements Serializable {
 
     public Client getClient() {
         return client;
+    }
+
+    public void setMaxpunches() {
+        this.maxpunches = 10;
     }
 
     public void setClient(Client client) {

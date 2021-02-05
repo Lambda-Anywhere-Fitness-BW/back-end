@@ -81,4 +81,15 @@ public class Client extends Auditable {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "clientid=" + clientid +
+                ", clientfitnessclasses=" + clientfitnessclasses +
+                ", user=" + user +
+                ", fitnesslevel=" + fitnesslevel +
+                ", location='" + location + '\'' +
+                '}';
+    }
 }

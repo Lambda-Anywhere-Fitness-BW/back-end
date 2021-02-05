@@ -19,7 +19,7 @@ public class FitnessClassController {
     @Autowired
     private FitnessClassService fitnessClassService;
 
-    @GetMapping(value = "/classes/all", produces = "application/json")
+    @GetMapping(value = "/all", produces = "application/json")
     private ResponseEntity<?> getAllClasses(){
         List<FitnessClass> myClasses = fitnessClassService.findAll();
         return new ResponseEntity<>(myClasses, HttpStatus.OK);

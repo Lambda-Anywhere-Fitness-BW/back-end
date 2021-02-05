@@ -129,4 +129,19 @@ public class FitnessClass extends Auditable {
     public void setClients(Set<ClientFitnessClass> clients) {
         this.clients = clients;
     }
+
+    @Override
+    public String toString() {
+        return "FitnessClass{" +
+                "fitnessclassid=" + fitnessclassid +
+                ", name='" + name + '\'' +
+                ", starttime='" + starttime + '\'' +
+                ", duration='" + duration + '\'' +
+                ", intensitylevel=" + intensitylevel +
+                ", location='" + location + '\'' +
+                ", instructor=" + instructor +
+                ", fitnessclasstype=" + fitnessclasstype +
+                ", clients=" + clients +
+                '}';
+    }
 }
