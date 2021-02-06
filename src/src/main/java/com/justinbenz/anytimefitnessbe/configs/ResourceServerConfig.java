@@ -1,6 +1,7 @@
 package com.justinbenz.anytimefitnessbe.configs;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -89,9 +90,12 @@ public class ResourceServerConfig
         //     X-Content-Type-Options: nosniff
         //     X-Frame-Options: DENY
         //     X-XSS-Protection: 1; mode=block
-        http.headers()
-                .frameOptions()
-                .disable();
+        http.csrf()
+                .disable()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS,"/path/to/allow").permitAll()//allow CORS option calls
+                .antMatchers("/resources/**").permitAll()
+                .anyRequest().authenticated();
 
         // This application implements its own logout procedure so disable the one built into Spring Security
         http.logout()

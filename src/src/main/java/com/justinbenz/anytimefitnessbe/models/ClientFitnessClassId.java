@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class ClientFitnessClassId extends Auditable implements Serializable {
+public class ClientFitnessClassId implements Serializable {
 
     private long client;
 
@@ -40,6 +40,6 @@ public class ClientFitnessClassId extends Auditable implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(client, fitnessclass);
+        return 666;
     }
 }

@@ -17,6 +17,12 @@ public class FitnessClass extends Auditable {
     @Column(nullable = false, unique = false)
     private String name;
 
+    @Column(length = 1000)
+    private String description;
+
+    @Column(nullable = false, unique = true)
+    private String date;
+
     @Column(nullable = false, unique = false)
     private String starttime;
 
@@ -47,8 +53,10 @@ public class FitnessClass extends Auditable {
     public FitnessClass() {
     }
 
-    public FitnessClass(String name, String starttime, String duration, int intensitylevel, String location, Instructor instructor, FitnessClassType fitnessclasstype, Set<ClientFitnessClass> clients) {
+    public FitnessClass(String name, String description, String date, String starttime, String duration, int intensitylevel, String location, Instructor instructor, FitnessClassType fitnessclasstype, Set<ClientFitnessClass> clients) {
         this.name = name;
+        this.description = description;
+        this.date = date;
         this.starttime = starttime;
         this.duration = duration;
         this.intensitylevel = intensitylevel;
@@ -72,6 +80,22 @@ public class FitnessClass extends Auditable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getStarttime() {
@@ -118,8 +142,8 @@ public class FitnessClass extends Auditable {
         return fitnessclasstype;
     }
 
-    public void setFitnessclasstype(FitnessClassType fitnessClassType) {
-        this.fitnessclasstype = fitnessClassType;
+    public void setFitnessclasstype(FitnessClassType fitnessclasstype) {
+        this.fitnessclasstype = fitnessclasstype;
     }
 
     public Set<ClientFitnessClass> getClients() {

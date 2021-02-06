@@ -51,11 +51,14 @@ INSERT INTO FITNESSCLASSTYPES(FITNESSCLASSTYPEID, NAME)
            (3, 'Gymnastics'),
            (4, 'Kalisthenics');
 
-INSERT INTO FITNESSCLASSES(FITNESSCLASSID, INSTRUCTORID, FITNESSCLASSTYPEID, NAME, STARTTIME, DURATION, INTENSITYLEVEL, LOCATION, CREATEDBY, CREATEDDATE, LASTMODIFIEDBY, LASTMODIFIEDDATE)
-    VALUES (1, 3, 1, 'Pilates101', '12:00 PM', '30 minutes', 1, 'Planet Fitness', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
-           (2, 4, 3, 'HIIT for dummies', '2:30 PM', '1 hour', 2, 'Iron Gym', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
-           (3, 3, 2, 'Extreme Gymnastics', '11:00 AM', '2 hours', 3, 'YMCA', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
-           (4, 4, 4, 'Lose Weight With NO Weights!', '45 minutes', '1 hour and 30 minutes', 1, 'The Upside Down', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
+INSERT INTO FITNESSCLASSES(FITNESSCLASSID, INSTRUCTORID, FITNESSCLASSTYPEID, NAME, DATE, DESCRIPTION, STARTTIME, DURATION, INTENSITYLEVEL, LOCATION, CREATEDBY, CREATEDDATE, LASTMODIFIEDBY, LASTMODIFIEDDATE)
+    VALUES (1, 3, 1, 'Pilates101','February 12th','The jacket fits him like a glove, a tailored glove. It has a subtle pinstripe pattern which gives the suit an elegant look. The 3 buttons of his single breasted jacket have been left unbuttoned, buttoned up wouldve made the overall look too fancy for his taste.
+The jacket is the same length all around, it has vents at either side, theres a single pocket on one side and theres a breast pocket which has been left empty', '12:00 PM', '30 minutes', 1, 'Planet Fitness', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (2, 4, 3, 'HIIT for dummies','March 3rd','This special and rare creature is a type of mammal. Its about the size of a tiger, has six legs, but they have no tail.
+They have a soft, smooth skin covered in short, soft hairs which is usually either light bronze, light pink, purple, light orange or bronze or a combination of these colors.', '2:30 PM', '1 hour', 2, 'Iron Gym', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (3, 3, 2, 'Extreme Gymnastics','April 2nd','These creatures are very peaceful, but theyre very territorial. They mate once every nine to ten months and they mate with a select few partners throughout life. Which, with their long lifepans, is to be expected.', '11:00 AM', '2 hours', 3, 'YMCA', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
+           (4, 4, 4, 'Lose Weight With NO Weights!','December 11th','This adorable and incredibily rare creature is a type of reptile. It''s about the size of a viper, has four legs and a long, useless tail.
+They have a thick, rough skin covered in thin, coarse scales, which is usually either dark orange, white, black or purple or a combination of these colors.','45 minutes', '1 hour and 30 minutes', 1, 'The Upside Down', 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP);
 
 INSERT INTO CLIENTFITNESSCLASSES(CLIENTID, FITNESSCLASSID, MAXPUNCHES, PUNCHES, CREATEDBY, CREATEDDATE, LASTMODIFIEDBY, LASTMODIFIEDDATE)
     VALUES (1, 1, 20, 1, 'SYSTEM', CURRENT_TIMESTAMP, 'SYSTEM', CURRENT_TIMESTAMP),
